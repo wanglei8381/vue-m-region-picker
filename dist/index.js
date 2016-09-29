@@ -1,8 +1,10 @@
+'use strict';
+
 require('./style.css');
 var areas = require('./areas');
 module.exports = {
     template: require('./template.html'),
-    data: function () {
+    data: function data() {
         return {
             provinceList: [],
             cityList: [],
@@ -35,26 +37,26 @@ module.exports = {
         }
     },
     computed: {
-        style(){
+        style: function style() {
             if (this.type === 3) {
                 return {
                     width: '33.333%',
                     float: 'left'
-                }
+                };
             } else if (this.type === 2) {
                 return {
                     width: '50%',
                     float: 'left'
-                }
+                };
             } else if (this.type === 1) {
                 return {
                     width: '100%'
-                }
+                };
             }
         }
     },
     watch: {
-        provinceIdx(idx){
+        provinceIdx: function provinceIdx(idx) {
             if (!this.isWatch) return;
             this.cityList = areas[1][idx];
             this.areaList = areas[2][idx][0];
@@ -63,7 +65,7 @@ module.exports = {
             this.cityIdx = 0;
             this.areaIdx = 0;
         },
-        cityIdx(idx){
+        cityIdx: function cityIdx(idx) {
             if (!this.isWatch) return;
             this.areaList = areas[2][idx][0];
             this.areaPicker = this.areaList[0];
@@ -71,7 +73,7 @@ module.exports = {
         }
     },
     methods: {
-        choose: function (method) {
+        choose: function choose(method) {
             this.open = false;
             if (method == 'cancle') {
                 return this[method]();
@@ -85,7 +87,9 @@ module.exports = {
             }
         }
     },
-    ready(){
+    ready: function ready() {
+        var _this = this;
+
         this.provinceIdx = 1;
         this.cityIdx = 0;
         this.areaIdx = 1;
@@ -95,13 +99,14 @@ module.exports = {
         this.provincePicker = this.provinceList[this.provinceIdx];
         this.cityPicker = this.cityList[this.cityIdx];
         this.areaPicker = this.areaList[this.areaIdx];
-        window.addEventListener('click', ()=> {
-            this.open = false;
+        window.addEventListener('click', function () {
+            _this.open = false;
         });
-        this.$nextTick(()=> {
-            this.isWatch = true;
+        this.$nextTick(function () {
+            _this.isWatch = true;
         });
     },
+
     components: {
         'region-picker-cpt': require('vue-m-picker')
     }

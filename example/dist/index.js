@@ -10821,7 +10821,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        type: {
 	            type: Number,
-	            default: 3
+	            default: 1
 	        },
 	        cancle: {
 	            type: Function
@@ -10829,6 +10829,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        confirm: {
 	            type: Function,
 	            required: true
+	        }
+	    },
+	    computed: {
+	        style: function style() {
+	            if (this.type === 3) {
+	                return {
+	                    width: '33.333%',
+	                    float: 'left'
+	                };
+	            } else if (this.type === 2) {
+	                return {
+	                    width: '50%',
+	                    float: 'left'
+	                };
+	            } else if (this.type === 1) {
+	                return {
+	                    width: '100%'
+	                };
+	            }
 	        }
 	    },
 	    watch: {
@@ -10851,7 +10870,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    methods: {
 	        choose: function choose(method) {
 	            this.open = false;
-	            this[method](this.provincePicker, this.cityPicker, this.areaPicker);
+	            if (method == 'cancle') {
+	                return this[method]();
+	            }
+	            if (this.type === 3) {
+	                this[method](this.provincePicker, this.cityPicker, this.areaPicker);
+	            } else if (this.type === 2) {
+	                this[method](this.provincePicker, this.cityPicker);
+	            } else if (this.type === 1) {
+	                this[method](this.provincePicker);
+	            }
 	        }
 	    },
 	    ready: function ready() {
@@ -10929,7 +10957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 11 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"picker-wrapper\" @click.stop :class=\"{'open':open}\">\r\n  <div class=\"picker-action\">\r\n    <button class=\"btn btn-cancle\" @click=\"choose('cancle')\">取消</button>\r\n    <button class=\"btn btn-confirm\" @click=\"choose('confirm')\">确定</button>\r\n  </div>\r\n  <div style=\"width: 33.333%;float:left;\">\r\n    <region-picker-cpt :list=\"provinceList\" :picker.sync=\"provincePicker\" :cur-idx.sync=\"provinceIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div style=\"width: 33.333%;float:left;\">\r\n    <region-picker-cpt :list=\"cityList\" :picker.sync=\"cityPicker\" :cur-idx.sync=\"cityIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div style=\"width: 33.333%;float:left;\">\r\n    <region-picker-cpt :list=\"areaList\" :picker.sync=\"areaPicker\" :cur-idx.sync=\"areaIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n</div>";
+	module.exports = "<div class=\"picker-wrapper\" @click.stop :class=\"{'open':open}\">\r\n  <div class=\"picker-action\">\r\n    <button class=\"btn btn-cancle\" @click=\"choose('cancle')\">取消</button>\r\n    <button class=\"btn btn-confirm\" @click=\"choose('confirm')\">确定</button>\r\n  </div>\r\n  <div :style=\"style\">\r\n    <region-picker-cpt :list=\"provinceList\" :picker.sync=\"provincePicker\" :cur-idx.sync=\"provinceIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type>1\">\r\n    <region-picker-cpt :list=\"cityList\" :picker.sync=\"cityPicker\" :cur-idx.sync=\"cityIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type==3\">\r\n    <region-picker-cpt :list=\"areaList\" :picker.sync=\"areaPicker\" :cur-idx.sync=\"areaIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n</div>";
 
 /***/ },
 /* 12 */

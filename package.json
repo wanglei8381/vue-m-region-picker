@@ -20,7 +20,7 @@
     "url": "git@github.com:wanglei8381/vue-m-region-picker.git/issues"
   },
   "scripts": {
-    "move": "cp -R src/style.css src/template.html dist/",
+    "move": "cp src/style.css src/template.html dist/",
     "compile": "babel -d dist/ src/ --presets es2015",
     "prepublish": "npm run move && npm run compile"
   },
