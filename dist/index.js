@@ -90,9 +90,6 @@ module.exports = {
     ready: function ready() {
         var _this = this;
 
-        this.provinceIdx = 1;
-        this.cityIdx = 0;
-        this.areaIdx = 1;
         this.provinceList = areas[0];
         this.cityList = areas[1][this.provinceIdx];
         this.areaList = areas[2][this.provinceIdx][this.cityIdx];
