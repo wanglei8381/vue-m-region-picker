@@ -1,4 +1,4 @@
-#vue-pullrefresh
+#vue-m-region-picker
  <h5>基于vue的移动端省市区选择工具</h5>
 ##Install
 npm install vue-m-region-picker
