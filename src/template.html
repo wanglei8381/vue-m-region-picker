@@ -1,0 +1,20 @@
+<div class="picker-wrapper" @click.stop :class="{'open':open}">
+  <div class="picker-action">
+    <button class="btn btn-cancle" @click="choose('cancle')">取消</button>
+    <button class="btn btn-confirm" @click="choose('confirm')">确定</button>
+  </div>
+  <div style="width: 33.333%;float:left;">
+    <region-picker-cpt :list="provinceList" :picker.sync="provincePicker" :cur-idx.sync="provinceIdx" label="name"
+                       value="code"></region-picker-cpt>
+  </div>
+
+  <div style="width: 33.333%;float:left;">
+    <region-picker-cpt :list="cityList" :picker.sync="cityPicker" :cur-idx.sync="cityIdx" label="name"
+                       value="code"></region-picker-cpt>
+  </div>
+
+  <div style="width: 33.333%;float:left;">
+    <region-picker-cpt :list="areaList" :picker.sync="areaPicker" :cur-idx.sync="areaIdx" label="name"
+                       value="code"></region-picker-cpt>
+  </div>
+</div>
