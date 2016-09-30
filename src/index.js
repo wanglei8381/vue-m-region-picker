@@ -24,7 +24,7 @@ module.exports = {
         },
         type: {
             type: Number,
-            default: 1
+            default: 3
         },
         cancle: {
             type: Function
