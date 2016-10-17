@@ -4,17 +4,17 @@
     <button class="btn btn-confirm" @click="choose('confirm')">确定</button>
   </div>
   <div :style="style">
-    <region-picker-cpt :list="provinceList" :picker.sync="provincePicker" :cur-idx.sync="provinceIdx" label="name"
+    <region-picker-cpt :list="provinceList" @picker="provincepicker" :cur-idx="provinceIdx" label="name"
                        value="code"></region-picker-cpt>
   </div>
 
   <div :style="style" v-if="type>1">
-    <region-picker-cpt :list="cityList" :picker.sync="cityPicker" :cur-idx.sync="cityIdx" label="name"
+    <region-picker-cpt :list="cityList" @picker="citypicker" :cur-idx="cityIdx" label="name"
                        value="code"></region-picker-cpt>
   </div>
 
   <div :style="style" v-if="type==3">
-    <region-picker-cpt :list="areaList" :picker.sync="areaPicker" :cur-idx.sync="areaIdx" label="name"
+    <region-picker-cpt :list="areaList" @picker="areapicker" :cur-idx="areaIdx" label="name"
                        value="code"></region-picker-cpt>
   </div>
 </div>

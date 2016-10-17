@@ -7,20 +7,18 @@ module.exports = {
             provinceList: [],
             cityList: [],
             areaList: [],
-            provincePicker: {},
-            cityPicker: {},
-            areaPicker: {},
+            province: {},
+            city: {},
+            area: {},
             provinceIdx: 0,
             cityIdx: 0,
-            areaIdx: 0,
-            isWatch: false
+            areaIdx: 0
         };
     },
     props: {
         open: {
             type: Boolean,
-            required: true,
-            twoWay: true
+            required: true
         },
         type: {
             type: Number,
@@ -53,51 +51,47 @@ module.exports = {
             }
         }
     },
-    watch: {
-        provinceIdx(idx){
-            if (!this.isWatch) return;
+    methods: {
+        'provincepicker': function (item, idx) {
             this.cityList = areas[1][idx];
             this.areaList = areas[2][idx][0];
-            this.cityPicker = this.cityList[0];
-            this.areaPicker = this.areaList[0];
+            this.province = item;
+            this.city = this.cityList[0];
+            this.area = this.areaList[0];
+            this.provinceIdx = idx;
             this.cityIdx = 0;
             this.areaIdx = 0;
         },
-        cityIdx(idx){
-            if (!this.isWatch) return;
-            this.areaList = areas[2][idx][0];
-            this.areaPicker = this.areaList[0];
+        'citypicker': function (item, idx) {
+            this.areaList = areas[2][this.provinceIdx][idx];
+            this.city = item;
+            this.area = this.areaList[0];
             this.areaIdx = 0;
-        }
-    },
-    methods: {
+        },
+        'areapicker': function (item, index) {
+            this.area = item;
+            this.areaIdx = index;
+        },
         choose: function (method) {
-            this.open = false;
             if (method == 'cancle') {
                 return this[method]();
             }
             if (this.type === 3) {
-                this[method](this.provincePicker, this.cityPicker, this.areaPicker);
+                this[method](this.province, this.city, this.area);
             } else if (this.type === 2) {
-                this[method](this.provincePicker, this.cityPicker);
+                this[method](this.province, this.city);
             } else if (this.type === 1) {
-                this[method](this.provincePicker);
+                this[method](this.province);
             }
         }
     },
-    ready(){
+    mounted(){
         this.provinceList = areas[0];
         this.cityList = areas[1][this.provinceIdx];
         this.areaList = areas[2][this.provinceIdx][this.cityIdx];
-        this.provincePicker = this.provinceList[this.provinceIdx];
-        this.cityPicker = this.cityList[this.cityIdx];
-        this.areaPicker = this.areaList[this.areaIdx];
-        window.addEventListener('click', ()=> {
-            this.open = false;
-        });
-        this.$nextTick(()=> {
-            this.isWatch = true;
-        });
+        this.province = this.provinceList[this.provinceIdx];
+        this.city = this.cityList[this.cityIdx];
+        this.area = this.areaList[this.areaIdx];
     },
     components: {
         'region-picker-cpt': require('vue-m-picker')

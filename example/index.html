@@ -11,11 +11,13 @@
   <title>省市区</title>
 </head>
 <body>
-<div class="choose-result">
-  <button class="btn" @click.stop="choose">选择省市区</button>
-  <p class="choose-result-cnt">选中了:{{message}}</p>
+<div id="container">
+  <div class="choose-result">
+    <button class="btn" @click.stop="choose">选择省市区</button>
+    <p class="choose-result-cnt">选中了:{{message}}</p>
+  </div>
+  <region-picker :open="open" :cancle="cancle" :confirm="confirm"></region-picker>
 </div>
-<region-picker :open.sync="open" :cancle="cancle" :confirm="confirm"></region-picker>
 <script src="dist/index.js"></script>
 </body>
 </html>
