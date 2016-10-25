@@ -1,7 +1,7 @@
 <div class="picker-wrapper" @click.stop :class="{'open':open}">
   <div class="picker-action">
-    <button class="btn btn-cancle" @click="choose('cancle')">取消</button>
-    <button class="btn btn-confirm" @click="choose('confirm')">确定</button>
+    <button class="btn btn-cancle"  v-touch:tap="cancle">取消</button>
+    <button class="btn btn-confirm" v-touch:tap="choose">确定</button>
   </div>
   <div :style="style">
     <region-picker-cpt :list="provinceList" @picker="provincepicker" :cur-idx="provinceIdx" label="name"

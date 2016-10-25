@@ -7958,6 +7958,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(7);
 	var areas = __webpack_require__(9);
+	__webpack_require__(5).use(__webpack_require__(22));
 	module.exports = {
 	    template: __webpack_require__(10),
 	    data: function data() {
@@ -8030,16 +8031,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.area = item;
 	            this.areaIdx = index;
 	        },
-	        choose: function choose(method) {
-	            if (method == 'cancle') {
-	                return this[method]();
-	            }
+	        choose: function choose() {
 	            if (this.type === 3) {
-	                this[method](this.province, this.city, this.area);
+	                this.confirm(this.province, this.city, this.area);
 	            } else if (this.type === 2) {
-	                this[method](this.province, this.city);
+	                this.confirm(this.province, this.city);
 	            } else if (this.type === 1) {
-	                this[method](this.province);
+	                this.confirm(this.province);
 	            }
 	        }
 	    },
@@ -8107,7 +8105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"picker-wrapper\" @click.stop :class=\"{'open':open}\">\r\n  <div class=\"picker-action\">\r\n    <button class=\"btn btn-cancle\" @click=\"choose('cancle')\">取消</button>\r\n    <button class=\"btn btn-confirm\" @click=\"choose('confirm')\">确定</button>\r\n  </div>\r\n  <div :style=\"style\">\r\n    <region-picker-cpt :list=\"provinceList\" @picker=\"provincepicker\" :cur-idx=\"provinceIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type>1\">\r\n    <region-picker-cpt :list=\"cityList\" @picker=\"citypicker\" :cur-idx=\"cityIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type==3\">\r\n    <region-picker-cpt :list=\"areaList\" @picker=\"areapicker\" :cur-idx=\"areaIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n</div>";
+	module.exports = "<div class=\"picker-wrapper\" @click.stop :class=\"{'open':open}\">\r\n  <div class=\"picker-action\">\r\n    <button class=\"btn btn-cancle\"  v-touch:tap=\"cancle\">取消</button>\r\n    <button class=\"btn btn-confirm\" v-touch:tap=\"choose\">确定</button>\r\n  </div>\r\n  <div :style=\"style\">\r\n    <region-picker-cpt :list=\"provinceList\" @picker=\"provincepicker\" :cur-idx=\"provinceIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type>1\">\r\n    <region-picker-cpt :list=\"cityList\" @picker=\"citypicker\" :cur-idx=\"cityIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n\r\n  <div :style=\"style\" v-if=\"type==3\">\r\n    <region-picker-cpt :list=\"areaList\" @picker=\"areapicker\" :cur-idx=\"areaIdx\" label=\"name\"\r\n                       value=\"code\"></region-picker-cpt>\r\n  </div>\r\n</div>";
 
 /***/ },
 /* 11 */
@@ -8973,6 +8971,50 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"m-picker\">\n  <div class=\"m-picker-inner\">\n    <div class=\"m-picker-rule\"></div>\n    <ul class=\"m-picker-list\">\n      <li v-for=\"(item, index) of list\" :key=\"index\"\n          :style=\"{transform: 'rotateX(' + (-threshold * index) +'deg) translateZ(90px)'}\">{{item[label]}}\n      </li>\n    </ul>\n  </div>\n</div>";
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Touch = __webpack_require__(15);
+	
+	var app = module.exports = {};
+	app.install = function (Vue, options) {
+	    Vue.directive('touch', {
+	        bind: function (el, binding, vnode) {
+	            var touch = el.touch = new Touch(el);
+	            var longTapTimeout = null;
+	            touch.on('touch:start', function (res) {
+	                var e = res.e;
+	                e.preventDefault();
+	                longTapTimeout = setTimeout(function () {
+	                    if (binding.arg === 'longtap') {
+	                        binding.value(res.e);
+	                    }
+	                }, 350);
+	            });
+	
+	            touch.on('touch:move', function () {
+	                clearTimeout(longTapTimeout);
+	            });
+	
+	            touch.on('touch:end', function (res) {
+	                clearTimeout(longTapTimeout);
+	
+	                if (binding.arg === 'tap' && Math.abs(res.x1 - res.x2) < 30 && Math.abs(res.y1 - res.y2) < 30) {
+	                    binding.value(res.e);
+	                }
+	            });
+	
+	            touch.start();
+	        },
+	        unbind: function (el) {
+	            //删除dom监听事件
+	            el.touch._remove();
+	            el.touch = null;
+	        }
+	    });
+	}
 
 /***/ }
 /******/ ])

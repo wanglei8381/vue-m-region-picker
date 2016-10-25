@@ -1,6 +1,6 @@
 {
   "name": "vue-m-region-picker",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "移动端省市区选择工具",
   "license": "MIT",
   "main": "index.js",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "vue-m-picker": "^0.0.5",
+    "vue-m-touch": "^0.0.3",
     "vue": "^2.0.2"
   },
   "devDependencies": {

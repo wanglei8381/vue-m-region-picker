@@ -2,6 +2,7 @@
 
 require('./style.css');
 var areas = require('./areas');
+require('vue').use(require('vue-m-touch'));
 module.exports = {
     template: require('./template.html'),
     data: function data() {
@@ -74,16 +75,13 @@ module.exports = {
             this.area = item;
             this.areaIdx = index;
         },
-        choose: function choose(method) {
-            if (method == 'cancle') {
-                return this[method]();
-            }
+        choose: function choose() {
             if (this.type === 3) {
-                this[method](this.province, this.city, this.area);
+                this.confirm(this.province, this.city, this.area);
             } else if (this.type === 2) {
-                this[method](this.province, this.city);
+                this.confirm(this.province, this.city);
             } else if (this.type === 1) {
-                this[method](this.province);
+                this.confirm(this.province);
             }
         }
     },

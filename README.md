@@ -13,8 +13,7 @@ Vue.component('region-picker', require('vue-m-region-picker'));
 props: {
     open: {//打开关闭弹出层
         type: Boolean,
-        required: true,
-        twoWay: true
+        required: true
     },
     type: {//1:只有省,2:省市,3:省市区,默认是3
         type: Number,
