@@ -1,3 +1,7 @@
+body {
+  background-color: #fff;
+}
+
 .choose-result {
   text-align: center;
   position: absolute;

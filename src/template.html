@@ -1,20 +1,22 @@
-<div class="picker-wrapper" @click.stop :class="{'open':open}">
-  <div class="picker-action">
-    <button class="btn btn-cancle"  v-touch:tap="cancle">取消</button>
-    <button class="btn btn-confirm" v-touch:tap="choose">确定</button>
-  </div>
-  <div :style="style">
-    <region-picker-cpt :list="provinceList" @picker="provincepicker" :cur-idx="provinceIdx" label="name"
-                       value="code"></region-picker-cpt>
-  </div>
+<div v-touch:tap="cancle" class="picker-container" :class="{'open':open}">
+  <div class="picker-wrapper" @click.stop>
+    <div class="picker-action">
+      <span class="btn btn-cancle" v-touch:tap="cancle">取消</span>
+      <span class="btn btn-confirm" v-touch:tap="choose">确定</span>
+    </div>
+    <div :style="style">
+      <region-picker-cpt :list="provinceList" @picker="provincepicker" :cur-idx="provinceIdx" label="name"
+                         value="code"></region-picker-cpt>
+    </div>
 
-  <div :style="style" v-if="type>1">
-    <region-picker-cpt :list="cityList" @picker="citypicker" :cur-idx="cityIdx" label="name"
-                       value="code"></region-picker-cpt>
-  </div>
+    <div :style="style" v-if="type>1">
+      <region-picker-cpt :list="cityList" @picker="citypicker" :cur-idx="cityIdx" label="name"
+                         value="code"></region-picker-cpt>
+    </div>
 
-  <div :style="style" v-if="type==3">
-    <region-picker-cpt :list="areaList" @picker="areapicker" :cur-idx="areaIdx" label="name"
-                       value="code"></region-picker-cpt>
+    <div :style="style" v-if="type==3">
+      <region-picker-cpt :list="areaList" @picker="areapicker" :cur-idx="areaIdx" label="name"
+                         value="code"></region-picker-cpt>
+    </div>
   </div>
 </div>
