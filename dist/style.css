@@ -41,7 +41,7 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.picker-wrapper .picker-action .btn {
+.picker-wrapper .picker-action .picker-btn {
   display: inline-block;
   outline: none;
   line-height: 1.42;
@@ -56,6 +56,6 @@
   white-space: nowrap;
 }
 
-.picker-wrapper .picker-action .btn.btn-confirm {
+.picker-wrapper .picker-action .picker-btn.picker-btn-confirm {
   float: right;
 }

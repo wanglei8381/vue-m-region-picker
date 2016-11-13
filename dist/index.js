@@ -1,100 +1,68 @@
 'use strict';
 
-require('./style.css');
 var areas = require('./areas');
-require('vue').use(require('vue-m-touch'));
 module.exports = {
     template: require('./template.html'),
+    components: { 'wag-region-picker-cpt': require('vue-m-picker') },
     data: function data() {
         return {
-            provinceList: [],
-            cityList: [],
-            areaList: [],
-            province: {},
-            city: {},
-            area: {},
-            provinceIdx: 0,
-            cityIdx: 0,
-            areaIdx: 0
+            list: []
         };
     },
     props: {
-        open: {
-            type: Boolean,
-            required: true
-        },
         type: {
             type: Number,
             default: 3
-        },
-        cancle: {
-            type: Function
-        },
-        confirm: {
-            type: Function,
-            required: true
-        }
-    },
-    computed: {
-        style: function style() {
-            if (this.type === 3) {
-                return {
-                    width: '33.333%',
-                    float: 'left'
-                };
-            } else if (this.type === 2) {
-                return {
-                    width: '50%',
-                    float: 'left'
-                };
-            } else if (this.type === 1) {
-                return {
-                    width: '100%'
-                };
-            }
         }
     },
     methods: {
-        'provincepicker': function provincepicker(item, idx) {
-            this.cityList = areas[1][idx];
-            this.areaList = areas[2][idx][0];
-            this.province = item;
-            this.city = this.cityList[0];
-            this.area = this.areaList[0];
-            this.provinceIdx = idx;
-            this.cityIdx = 0;
-            this.areaIdx = 0;
-        },
-        'citypicker': function citypicker(item, idx) {
-            this.areaList = areas[2][this.provinceIdx][idx];
-            this.city = item;
-            this.area = this.areaList[0];
-            this.areaIdx = 0;
-        },
-        'areapicker': function areapicker(item, index) {
-            this.area = item;
-            this.areaIdx = index;
-        },
-        choose: function choose() {
+        confirm: function confirm(i, j, k) {
+            var province = this.provinceList[i];
+            var city = this.cityList[j];
+            var area = this.areaList[k];
             if (this.type === 3) {
-                this.confirm(this.province, this.city, this.area);
+                this.$emit('confirm', province, city, area);
             } else if (this.type === 2) {
-                this.confirm(this.province, this.city);
+                this.$emit('confirm', province, city);
             } else if (this.type === 1) {
-                this.confirm(this.province);
+                this.$emit('confirm', province);
             }
+        },
+        change: function change(itemIndex, index) {
+            if (this.type === 1) return;
+            if (itemIndex === 0) {
+                this.provincePicker(index);
+            } else if (itemIndex === 1 && this.type === 3) {
+                this.cityPicker(index);
+            }
+        },
+        provincePicker: function provincePicker(idx) {
+            this.cityList = areas[1][idx];
+            if (this.type === 2) {
+                this.list.splice(1, 1, this.cityList);
+            } else {
+                this.areaList = areas[2][idx][0];
+                this.list.splice(1, 2, this.cityList, this.areaList);
+            }
+
+            this.provinceIdx = idx;
+        },
+        cityPicker: function cityPicker(idx) {
+            this.areaList = areas[2][this.provinceIdx][idx];
+            this.list.splice(2, 1, this.areaList);
         }
     },
     mounted: function mounted() {
+        this.provinceIdx = 0;
         this.provinceList = areas[0];
-        this.cityList = areas[1][this.provinceIdx];
-        this.areaList = areas[2][this.provinceIdx][this.cityIdx];
-        this.province = this.provinceList[this.provinceIdx];
-        this.city = this.cityList[this.cityIdx];
-        this.area = this.areaList[this.areaIdx];
-    },
-
-    components: {
-        'region-picker-cpt': require('vue-m-picker')
+        this.cityList = areas[1][0];
+        this.areaList = areas[2][0][0];
+        if (this.type === 1) {
+            this.list = this.provinceList;
+        } else if (this.type === 2) {
+            this.list = [this.provinceList, this.cityList];
+        } else if (this.type === 3) {
+            this.list = [this.provinceList, this.cityList, this.areaList];
+        }
     }
 };
