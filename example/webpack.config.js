@@ -1,36 +1,19 @@
-var path = require('path')
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
-    entry: './index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
-        library: 'Vue',
-        libraryTarget: 'umd'
+  entry: './index.js',
+  output: {
+    path: 'dist',
+    filename: 'index.js'
+  },
+  module: {
+    rules: [
+      { test: /\.vue$/, loader: 'vue-loader' },
+      { test: /\.styl$/, use: ["vue-style-loader", "css-loader", "stylus-loader"] }
+    ]
+  },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.js'
     },
-    module: {
-        loaders: [
-            {test: /\.css$/, loader: "style!css"},
-            {test: /\.styl$/, loader: "style!css!stylus"},
-            {
-                test: /\.js$/,
-                loader: 'babel',
-                exclude: /(node_modules|bower_components)/,
-                query: {
-                    presets: ['es2015']
-                },
-                plugins: ['transform-runtime']
-            },
-            {test: /\.html$/, loader: "html"},
-            {test: /\.vue$/, loader: 'vue'}
-        ]
-    },
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.js'
-        },
-        extensions: ['', '.js', '.json', '.vue']
-    },
-    devtool: "source-map",
-    contentBase: '/'
+    extensions: ['.js', '.json', '.vue']
+  }
 }

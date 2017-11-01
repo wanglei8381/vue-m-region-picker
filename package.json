@@ -1,9 +1,9 @@
 {
   "name": "vue-m-region-picker",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "移动端省市区选择工具",
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/region-picker.vue",
   "author": "wanglei",
   "keywords": [
     "vue-m-region-picker",
@@ -19,13 +19,8 @@
   "bugs": {
     "url": "git@github.com:wanglei8381/vue-m-region-picker.git/issues"
   },
-  "scripts": {
-    "move": "cp src/style.css src/template.html dist/",
-    "compile": "babel -d dist/ src/ --presets es2015",
-    "prepublish": "npm run move && npm run compile"
-  },
   "dependencies": {
-    "vue-m-picker": "^1.0.6"
+    "vue-m-picker": "^1.0.7"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",

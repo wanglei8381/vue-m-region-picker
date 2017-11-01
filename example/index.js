@@ -1,6 +1,5 @@
-require('./style.css');
 var Vue = require('vue');
-Vue.component('region-picker', require('../src'));
+Vue.component('region-picker', require('../src/region-picker.vue'));
 new Vue({
     el: '#container',
     data: function () {
