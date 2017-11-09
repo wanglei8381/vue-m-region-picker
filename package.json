@@ -1,6 +1,6 @@
 {
   "name": "vue-m-region-picker",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "移动端省市区选择工具",
   "license": "MIT",
   "main": "src/region-picker.vue",

@@ -1,5 +1,5 @@
 <template>
-  <wag-region-picker-cpt :list="list" label="name" :confirm="confirm" :change="change">
+  <wag-region-picker-cpt :list="list" :label="label" :confirm="confirm" :change="change">
     <slot></slot>
   </wag-region-picker-cpt>
 </template>
@@ -11,12 +11,21 @@
     data: function () {
       return {
         list: []
-      };
+      }
     },
     props: {
       type: {
         type: Number,
         default: 3
+      },
+      raw: {
+        type: Boolean,
+        default: false
+      }
+    },
+    computed: {
+      label () {
+        return this.raw ? 'text' : 'abbreviated'
       }
     },
     methods: {
@@ -24,12 +33,15 @@
         var province = this.provinceList[i];
         var city = this.cityList[j];
         var area = this.areaList[k];
+        var p = { name: province.abbreviated, text: province.text, value: province.value }
+        var c = { name: city.abbreviated, text: city.text, value: city.value }
+        var a = { name: area.abbreviated, text: area.text, value: area.value }
         if (this.type === 3) {
-          this.$emit('confirm', province, city, area);
+          this.$emit('confirm', p, c, a);
         } else if (this.type === 2) {
-          this.$emit('confirm', province, city);
+          this.$emit('confirm', p, c);
         } else if (this.type === 1) {
-          this.$emit('confirm', province);
+          this.$emit('confirm', p);
         }
       },
       change(itemIndex, index) {

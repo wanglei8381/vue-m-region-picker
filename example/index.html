@@ -29,7 +29,7 @@
 <body>
 <div id="container">
   <div class="choose-result">
-    <region-picker @confirm="confirm" :type="3">
+    <region-picker @confirm="confirm" :type="3" :raw="false">
       <button class="btn">选择省市区</button>
     </region-picker>
     <p class="choose-result-cnt">选中了:{{message}}</p>
